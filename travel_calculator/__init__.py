@@ -1,1 +1,1 @@
-from coordinate_parser import CoordinateParser
+from .coordinate_parser import CoordinateParser
