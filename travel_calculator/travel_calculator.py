@@ -46,7 +46,6 @@ class TravelCalculator:
         cheapest_paths = []
         if solution:
             cheapest_paths = self._get_cheapest_path(routing, solution)
-            self.print_solution(self.manager, routing, solution)
 
         return cheapest_paths
 
@@ -66,39 +65,6 @@ class TravelCalculator:
                 vehicle_route.append(self.manager.IndexToNode(index))
                 index = solution.Value(routing.NextVar(index))
             vehicle_route.append(self.manager.IndexToNode(index))
-            print(f'VECHICLE {vehicle} ROUTE IS : {vehicle_route}')
             paths.append(vehicle_route)
 
         return paths
-
-    # def _get_cheapest_path1(self, routing, solution) -> List:
-    #     paths = []
-    #     for vehicle in range(routing.vehicles()):
-    #         index = routing.Start(vehicle)
-    #         path = [self.manager.IndexToNode(index)]
-    #         while not routing.IsEnd(index):
-    #             index = solution.Value(routing.NextVar(index))
-    #             path.append(self.manager.IndexToNode(index))
-    #         paths.append(path)
-    #
-    #     return paths
-
-    def print_solution(self, manager, routing, solution):
-        """Prints solution on console."""
-        print(f'Objective: {solution.ObjectiveValue()}')
-        max_route_distance = 0
-        for vehicle_id in range(self.data['num_vehicles']):
-            index = routing.Start(vehicle_id)
-            plan_output = 'Route for vehicle {}:\n'.format(vehicle_id)
-            route_distance = 0
-            while not routing.IsEnd(index):
-                plan_output += ' {} -> '.format(manager.IndexToNode(index))
-                previous_index = index
-                index = solution.Value(routing.NextVar(index))
-                route_distance += routing.GetArcCostForVehicle(
-                    previous_index, index, vehicle_id)
-            plan_output += '{}\n'.format(manager.IndexToNode(index))
-            plan_output += 'Distance of the route: {}m\n'.format(route_distance)
-            print(plan_output)
-            max_route_distance = max(route_distance, max_route_distance)
-        print('Maximum of the route distances: {}m'.format(max_route_distance))

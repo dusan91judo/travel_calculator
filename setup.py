@@ -2,7 +2,7 @@ from setuptools import find_packages, setup
 
 setup(
     name='travel-calculator',
-    version='1.0.5',
+    version='1.0.6',
     description='Handle travel salesman problem',
     author='Dusan Markovic',
     author_email='dusan91judo@gmail.com',
